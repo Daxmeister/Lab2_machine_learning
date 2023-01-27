@@ -113,25 +113,79 @@ fig2 = plt.figure()
 ax2 = fig2.add_subplot(111)
 ax2.grid()
 
-A_many_vectors = np.random.uniform(-1, 1, 2000) # We start by creating a vector and reshaping it
-A_many_vectors = A_many_vectors.reshape(1000, 2)
+A_many_vectors = np.random.uniform(-1, 1, dim * 1000) # We start by creating a vector and reshaping it
+A_many_vectors = A_many_vectors.reshape(1000, dim)
+
 
 
 E_vector_w_distances = np.array([])
 
 for i in range(1000):
-    B_vector_w_rows = np.ones((999, 2)) * A_many_vectors[0, :]  # This will be used to calculate distances
+    B_vector_w_rows = np.ones((999, dim)) * A_many_vectors[0, :]  # This will be used to calculate distances
 
     A_many_vectors = A_many_vectors[1:, :] # We remove the first vector, so as not to calculate distance to itself
 
     C_difference_vector = B_vector_w_rows - A_many_vectors  # Contains all the vectors between the points. (999,2)
 
-    A_many_vectors = A_many_vectors.reshape(1, 1998) # We re-append the point to our vector that keeps track of all points
+    A_many_vectors = A_many_vectors.reshape(1, dim*999) # We re-append the point to our vector that keeps track of all points
     A_many_vectors = np.append(A_many_vectors, B_vector_w_rows[0, :])
-    A_many_vectors = A_many_vectors.reshape(1000, 2)
+    A_many_vectors = A_many_vectors.reshape(1000, dim)
 
     # Below we create a vector with all 999 distances between this point and others and append it our vector that keeps track
-    F_vector_w_euclidiean_distances = np.sqrt(np.square(C_difference_vector[:, 0]) + np.square(C_difference_vector[:, 1]))
+    #F_vector_w_euclidiean_distances = np.zeros((999, 1))
+    F_vector_w_euclidiean_distances = np.square(C_difference_vector[:, 0])
+    for column in range(1, dim):
+        F_vector_w_euclidiean_distances += np.square(C_difference_vector[:, column])
+
+
+    F_vector_w_euclidiean_distances = np.sqrt(F_vector_w_euclidiean_distances)
+
+    #print(F_vector_w_euclidiean_distances)
+    E_vector_w_distances = np.append(E_vector_w_distances,F_vector_w_euclidiean_distances.reshape(1, 999))
+
+
+
+ax2.hist(E_vector_w_distances, bins=50, density=True)
+ax2.set(xlim=[0, 10], ylabel = 'Probability density', xlabel='Euclidean Distance')
+
+plt.show()
+
+
+################################################################################################################
+# 1.9 Uniform samples 100
+################################################################################################################
+dim = 10
+fig2 = plt.figure()
+ax2 = fig2.add_subplot(111)
+ax2.grid()
+
+A_many_vectors = np.random.uniform(-1, 1, dim * 1000) # We start by creating a vector and reshaping it
+A_many_vectors = A_many_vectors.reshape(1000, dim)
+
+
+
+E_vector_w_distances = np.array([])
+
+for i in range(1000):
+    B_vector_w_rows = np.ones((999, dim)) * A_many_vectors[0, :]  # This will be used to calculate distances
+
+    A_many_vectors = A_many_vectors[1:, :] # We remove the first vector, so as not to calculate distance to itself
+
+    C_difference_vector = B_vector_w_rows - A_many_vectors  # Contains all the vectors between the points. (999,2)
+
+    A_many_vectors = A_many_vectors.reshape(1, dim*999) # We re-append the point to our vector that keeps track of all points
+    A_many_vectors = np.append(A_many_vectors, B_vector_w_rows[0, :])
+    A_many_vectors = A_many_vectors.reshape(1000, dim)
+
+    # Below we create a vector with all 999 distances between this point and others and append it our vector that keeps track
+    #F_vector_w_euclidiean_distances = np.zeros((999, 1))
+    F_vector_w_euclidiean_distances = np.square(C_difference_vector[:, 0])
+    for column in range(1, dim):
+        F_vector_w_euclidiean_distances += np.square(C_difference_vector[:, column])
+
+
+    F_vector_w_euclidiean_distances = np.sqrt(F_vector_w_euclidiean_distances)
+
     #print(F_vector_w_euclidiean_distances)
     E_vector_w_distances = np.append(E_vector_w_distances,F_vector_w_euclidiean_distances.reshape(1, 999))
 
@@ -141,3 +195,54 @@ ax2.hist(E_vector_w_distances, bins=50, density=True)
 ax2.set(xlim=[0, 10], ylabel = 'Probability density', xlabel='Euclidean Distance')
 
 plt.show()
+
+
+################################################################################################################
+# 1.910 Uniform samples 100
+################################################################################################################
+dim = 100
+fig2 = plt.figure()
+ax2 = fig2.add_subplot(111)
+ax2.grid()
+
+A_many_vectors = np.random.uniform(-1, 1, dim * 1000) # We start by creating a vector and reshaping it
+A_many_vectors = A_many_vectors.reshape(1000, dim)
+
+
+
+E_vector_w_distances = np.array([])
+
+for i in range(1000):
+    B_vector_w_rows = np.ones((999, dim)) * A_many_vectors[0, :]  # This will be used to calculate distances
+
+    A_many_vectors = A_many_vectors[1:, :] # We remove the first vector, so as not to calculate distance to itself
+
+    C_difference_vector = B_vector_w_rows - A_many_vectors  # Contains all the vectors between the points. (999,2)
+
+    A_many_vectors = A_many_vectors.reshape(1, dim*999) # We re-append the point to our vector that keeps track of all points
+    A_many_vectors = np.append(A_many_vectors, B_vector_w_rows[0, :])
+    A_many_vectors = A_many_vectors.reshape(1000, dim)
+
+    # Below we create a vector with all 999 distances between this point and others and append it our vector that keeps track
+    #F_vector_w_euclidiean_distances = np.zeros((999, 1))
+    F_vector_w_euclidiean_distances = np.square(C_difference_vector[:, 0])
+    for column in range(1, dim):
+        F_vector_w_euclidiean_distances += np.square(C_difference_vector[:, column])
+
+
+    F_vector_w_euclidiean_distances = np.sqrt(F_vector_w_euclidiean_distances)
+
+    #print(F_vector_w_euclidiean_distances)
+    E_vector_w_distances = np.append(E_vector_w_distances,F_vector_w_euclidiean_distances.reshape(1, 999))
+
+
+print(E_vector_w_distances.shape)
+ax2.hist(E_vector_w_distances, bins=50, density=True)
+ax2.set(xlim=[0, 10], ylabel = 'Probability density', xlabel='Euclidean Distance')
+
+plt.show()
+
+
+################################################################################################################
+# 1.11 Answers
+################################################################################################################
