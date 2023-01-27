@@ -152,7 +152,7 @@ plt.show()
 
 
 ################################################################################################################
-# 1.9 Uniform samples 100
+# 1.9 Uniform samples 10
 ################################################################################################################
 dim = 10
 fig2 = plt.figure()
@@ -198,7 +198,7 @@ plt.show()
 
 
 ################################################################################################################
-# 1.910 Uniform samples 100
+# 1.10 Uniform samples 100
 ################################################################################################################
 dim = 100
 fig2 = plt.figure()
@@ -246,3 +246,10 @@ plt.show()
 ################################################################################################################
 # 1.11 Answers
 ################################################################################################################
+# The distance between points in the n-dimension equals
+
+# spuare_root_of ( x1^2 + x2^2 + ... + xn^2)
+# Since x is the distance between two points in one dimension, all x are similarly distributed.
+# Thus we have square_root_of((n-1)*x^2 + x^2*2) = square_root_of(n-1) * square_root_of (x1^2 + x2^2)
+# As we increase the dimension, as n increases, the euclidean distances increase by a factor X*(n-1)^(0.5) roughly
+# This is why we see an increase in value as the number of dimensions increase
